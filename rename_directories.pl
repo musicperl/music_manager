@@ -5,6 +5,7 @@
 
 # TODO: in some corner case, you could overwrite
 # TODO: odd characters
+# TODO: skip tribute and various artists?
 
 # Make database from metal archives for all ids in ids database
 use File::Glob ':bsd_glob';
