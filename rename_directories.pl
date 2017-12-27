@@ -4,7 +4,8 @@
       
 
 # TODO: in some corner case, you could overwrite
-      #
+# TODO: odd characters
+
 # Make database from metal archives for all ids in ids database
 use File::Glob ':bsd_glob';
 use MP3::Tag;
@@ -20,12 +21,12 @@ use constant {
     NONE => 0,
 };
 
-
 sub error{
   my ($msg) = @_;
   print("ERROR: " . $msg);
-  exit(0);
+  #exit(0);
 }
+
 sub checkBadFiles{
   my ($todir, $dirh, $ext) = @_;
   my @files_m3u = map{"$todir/$_"}grep(/\.$ext$/, readdir($dirh));
@@ -97,7 +98,7 @@ sub rename_album_dirs{
       $mp3->get_tags();
       if( exists $mp3->{ID3v1}){
         my $current_album = $mp3->{ID3v1}->album;
-        my $current_track = $mp3->{ID3v1}->track1;
+        my $current_track = $mp3->{ID3v1}->track;
         my $current_year = $mp3->{ID3v1}->year;
         if( $current_track eq '' || !defined $current_track ){
           error("$file_mp3 has no track!\n");
@@ -116,12 +117,12 @@ sub rename_album_dirs{
       }
     }
   }elsif( $file_type == FLAC ){
-    print("Skipping directory with FLAC files for now: $this_dir\n");
+    #print("Skipping directory with FLAC files for now: $this_dir\n");
     return;
   }
 
   if( defined $album ){
-    print("$this_dir -> $album ($year)\n");
+    #print("$this_dir -> $album ($year)\n");
   }
 
   # Recurse
